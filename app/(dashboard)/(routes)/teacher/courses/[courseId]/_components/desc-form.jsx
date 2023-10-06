@@ -30,7 +30,7 @@ const DescForm = ({ initialData, courseId }) => {
 
   const form = useForm({
     resolver: zodResolver(formSchema),
-    defaultValues: initialData,
+    defaultValues: { description: initialData?.description || "" },
   });
 
   // pulling the values from form state
@@ -39,7 +39,7 @@ const DescForm = ({ initialData, courseId }) => {
   const onSubmit = async (values) => {
     try {
       await axios.patch(`/api/courses/${courseId}`, values);
-      toast.success("Course title modified");
+      toast.success("Course description modified");
       // reseting the state
       toggleEdit();
       // refresh the server component to refresh the title data

@@ -6,6 +6,7 @@ import { IconBadge } from "@/components/icon-badge";
 import { LayoutDashboard } from "lucide-react";
 import TitleForm from "./_components/title-form";
 import DescForm from "./_components/desc-form";
+import ImageForm from "./_components/image-form";
 
 const CoursePage = async ({ params }) => {
   // only the creator of the course can see and modify the coures
@@ -56,6 +57,7 @@ const CoursePage = async ({ params }) => {
           {/* title form */}
           <TitleForm initialData={course} courseId={course.id} />
           <DescForm initialData={course} courseId={course.id} />
+          <ImageForm initialData={course} courseId={course.id} />
         </div>
       </div>
     </div>
