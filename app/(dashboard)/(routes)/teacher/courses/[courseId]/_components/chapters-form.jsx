@@ -12,7 +12,7 @@ import {
   FormField,
 } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
-import { Pencil, PlusCircle } from "lucide-react";
+import { Loader2, Pencil, PlusCircle } from "lucide-react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -20,7 +20,7 @@ import { Input } from "@/components/ui/input";
 import ChapterList from "./chapters-list";
 
 const formSchema = z.object({
-  title: z.string().min(1),
+  title: z.string().min(1, { message: "Chapter's title is required" }),
 });
 const ChapterForm = ({ initialData, courseId }) => {
   const [isCreating, setIsCreating] = useState(false);
@@ -48,8 +48,32 @@ const ChapterForm = ({ initialData, courseId }) => {
       toast.error("Something went wrong!");
     }
   };
+
+  const onReorder = async (updatedData) => {
+    // console.log(updatedData);
+    try {
+      setIsUpdating(true);
+      await axios.put(`/api/courses/${courseId}/chapters/reorder`, {
+        list: updatedData,
+      });
+      toast.success("Chapter was reordered");
+      router.refresh();
+    } catch {
+      toast.error("Something went wrong");
+    } finally {
+      setIsUpdating(false);
+    }
+  };
+  const onEdit = (chapterId) => {
+    router.push(`/teacher/courses/${courseId}/chapters/${chapterId}`);
+  };
   return (
-    <div className="bg-slate-100 p-4 rounded-md mt-5">
+    <div className="bg-slate-100 p-4 rounded-md mt-5 relative">
+      {isUpdating && (
+        <div className="absolute h-full w-full flex items-center justify-center rounded-md bg-slate-500/20 top-0 right-0 text-sky-700">
+          <Loader2 className="h-6 w-6 animate-spin" />
+        </div>
+      )}
       <div className="font-medium flex items-center justify-between">
         Course Chapters
         <Button onClick={toggleCreating} variant="ghost">
@@ -102,9 +126,9 @@ const ChapterForm = ({ initialData, courseId }) => {
           {!initialData.chapters.length && "No chapter available"}
 
           <ChapterList
-            onEdit={() => {}}
-            onReorder={() => {}}
-            chapters={initialData.chapters || []}
+            onEdit={onEdit}
+            onReorder={onReorder}
+            items={initialData.chapters || []}
           />
         </div>
       )}
