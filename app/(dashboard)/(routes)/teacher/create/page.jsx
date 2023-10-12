@@ -79,7 +79,7 @@ const CreateCourse = () => {
               )}
             />
             <div className="flex items-center gap-x-2 mt-5">
-              <Link href="/">
+              <Link href="/teacher/courses">
                 <Button size="sm" variant="ghost">
                   Cancel
                 </Button>
