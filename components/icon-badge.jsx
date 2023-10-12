@@ -8,6 +8,7 @@ const backgroundVariants = cva("rounded-md flex items-center justify-center", {
     variant: {
       default: "bg-sky-100",
       success: "bg-emerald-100",
+      secondary: "bg-slate-100",
     },
     size: {
       default: "p-2",
@@ -25,6 +26,7 @@ const iconVariants = cva("", {
     variant: {
       default: "text-sky-700",
       success: "text-emerald-700",
+      secondary: "text-slate-900",
     },
     size: {
       default: "h-8 w-8",
