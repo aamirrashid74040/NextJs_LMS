@@ -2,7 +2,7 @@
 import { UserButton } from "@clerk/nextjs";
 import { LogOut } from "lucide-react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import React from "react";
 import { Button } from "./ui/button";
 import SearchInput from "./search-input";
